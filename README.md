@@ -12,7 +12,7 @@ Documentations on how to use Typeify!
 
 First let's install it from npm:
 ```bash
-npm install typeify
+npm install -g typeify
 ```
 
 ### Create a .js file
@@ -50,5 +50,29 @@ typeify test/example.js
 And the result should look like this:
 
 ```ts
+// example.ts
 
+let myVar: string = "ok";
+
+if (!myVar) {
+    console.log("not ok");
+} else {
+    console.log(myVar);
+}
 ```
+
+## What Typeify does?
+
+1. Converts `.js` files to `.ts` files
+2. Adds basic type annotations
+3. Fixes some common JavaScript issues (like using var)
+4. Keeps your original `.js` file as a backup
+
+## Limitations
+Typeify is a learning project and may not handle all JavaScript constructs perfectly. It's best used on simple JavaScript files and as a learning tool for TypeScript conversion.
+
+## Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+This project is licensed under the MIT License.
