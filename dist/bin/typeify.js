@@ -24,15 +24,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var converter_1 = require("../converter");
-var path = __importStar(require("path"));
-var main = function () {
-    var args = process.argv.slice(2);
+const converter_1 = require("../converter");
+const path = __importStar(require("path"));
+const main = () => {
+    const args = process.argv.slice(2);
     if (args.length === 0) {
         console.log('Please provide a JavaScript file to convert');
         process.exit(1);
     }
-    var filePath = path.resolve(args[0]);
+    const filePath = path.resolve(args[0]);
     (0, converter_1.convertFile)(filePath);
 };
 main();

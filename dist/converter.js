@@ -24,28 +24,28 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.convertFile = void 0;
-var fs = __importStar(require("fs"));
-var path = __importStar(require("path"));
-var convertFile = function (filePath) {
+const fs = __importStar(require("fs"));
+const path = __importStar(require("path"));
+const convertFile = (filePath) => {
     try {
         // Reads the file
-        var content = fs.readFileSync(filePath, "utf8");
+        const content = fs.readFileSync(filePath, "utf8");
         // Performs a basic conversion
-        var convertedContent = basicConvert(content);
+        const convertedContent = basicConvert(content);
         // Writes a converted content to a new .ts file
-        var dirName = path.dirname(filePath);
-        var baseName = path.basename(filePath, ".js");
-        var newFilePath = path.join(dirName, "".concat(baseName, ".ts"));
+        const dirName = path.dirname(filePath);
+        const baseName = path.basename(filePath, ".js");
+        const newFilePath = path.join(dirName, `${baseName}.ts`);
         fs.writeFileSync(newFilePath, convertedContent);
-        console.log("Converted ".concat(filePath, " to ").concat(newFilePath));
+        console.log(`Converted ${filePath} to ${newFilePath}`);
     }
     catch (error) {
-        console.error("Error converting file: ".concat(error));
+        console.error(`Error converting file: ${error}`);
     }
 };
 exports.convertFile = convertFile;
-var basicConvert = function (content) {
-    var convertedContent = content;
+const basicConvert = (content) => {
+    let convertedContent = content;
     // Fix invalid variable declarations
     convertedContent = convertedContent.replace(/^\s*(var)\s*=\s*(".*"|\d+)/gm, "let myVar: any = $2");
     // Convert remaining var to let

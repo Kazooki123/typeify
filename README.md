@@ -18,17 +18,17 @@ npm install -g @starlo/typeify
 
 ### Create a .js file
 
-First let's create a .js file as an example:
+Second let's create a .js file as an example:
 
 ```js
 // example.js
 
-var = "ok"
+var myVar = "ok"
 
-if(!var) {
+if(!myVar) {
     console.log("not ok")
 } else {
-    console.log(var)
+    console.log(myVar)
 }
 
 ```
