@@ -13,7 +13,7 @@ Documentations on how to use Typeify!
 First let's install it from npm:
 
 ```bash
-npm install -g typeify
+npm install -g @starlo/typeify
 ```
 
 ### Create a .js file
