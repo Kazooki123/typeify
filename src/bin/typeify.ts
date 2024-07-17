@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { convertFile } from './converter';
+import { convertFile } from '../converter';
 import * as path from 'path';
 
 const main = () => {

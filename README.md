@@ -11,6 +11,7 @@ Documentations on how to use Typeify!
 ### Install
 
 First let's install it from npm:
+
 ```bash
 npm install -g typeify
 ```
@@ -38,11 +39,13 @@ Now based on your opinion this might be messy or not clean so let's use Typeify!
 to make this work.
 
 Type this command:
+
 ```bash
 typeify example.js
 ```
 
 or if you want to refer to a directory you can run:
+
 ```bash
 typeify test/example.js
 ```
@@ -69,10 +72,13 @@ if (!myVar) {
 4. Keeps your original `.js` file as a backup
 
 ## Limitations
+
 Typeify is a learning project and may not handle all JavaScript constructs perfectly. It's best used on simple JavaScript files and as a learning tool for TypeScript conversion.
 
 ## Contributing
+
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
+
 This project is licensed under the MIT License.
