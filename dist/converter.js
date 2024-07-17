@@ -46,19 +46,15 @@ var convertFile = function (filePath) {
 exports.convertFile = convertFile;
 var basicConvert = function (content) {
     var convertedContent = content;
-    // Fix invalid variable declarations and uses
-    convertedContent = convertedContent.replace(/\b(var|let)\b(?=\s*=|[^a-zA-Z0-9_])/g, function (match, p1, offset, string) {
-        // Check if it's a declaration
-        if (string.slice(0, offset).trim().endsWith('let')) {
-            return 'myVar';
-        }
-        // It's an invalid use or declaration
-        return 'let myVar';
-    });
-    // Add basic type annotations
-    convertedContent = convertedContent.replace(/let\s+(\w+)(\s*=\s*)(".*"|\d+)/g, function (match, varName, equals, value) {
-        var type = value.startsWith('"') ? 'string' : 'number';
-        return "".concat(varName, ": ").concat(type).concat(equals).concat(value);
-    });
+    // Fix invalid variable declarations
+    convertedContent = convertedContent.replace(/^\s*(var)\s*=\s*(".*"|\d+)/gm, "let myVar: any = $2");
+    // Convert remaining var to let
+    convertedContent = convertedContent.replace(/\bvar\b/g, "let");
+    // Replace invalid variable uses, but not 'let' itself
+    convertedContent = convertedContent.replace(/\b(?<!(let|\.))var\b(?!\s*=)/g, "myVar");
+    // Add basic type annotations to string variables
+    convertedContent = convertedContent.replace(/let\s+(\w+)\s*=\s*"([^"]*)"/g, 'let $1: string = "$2"');
+    // Add basic type annotations to number variables
+    convertedContent = convertedContent.replace(/let\s+(\w+)\s*=\s*(\d+)/g, "let $1: number = $2");
     return convertedContent;
 };
