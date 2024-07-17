@@ -1,9 +1,9 @@
 // Example for converting
 
-var = "ok"
+var myVar = "ok"
 
-if(!var) {
+if(!myVar) {
     console.log("not ok")
 } else {
-    console.log(var)
+    console.log(myVar)
 }
