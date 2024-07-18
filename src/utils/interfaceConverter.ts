@@ -24,7 +24,7 @@ export function findAndConvertInterfaces(content: string): string {
     const [fullMatch, name, objectLiteral] = match;
     try {
       const obj = eval(`(${objectLiteral})`);
-      const interfaceString = convertToInterface(obj, `I${name}`);
+      const interfaceString = convertToInterface(obj, `${name}`);
       convertedContent = convertedContent.replace(
         fullMatch,
         interfaceString + fullMatch

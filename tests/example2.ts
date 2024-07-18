@@ -1,6 +1,8 @@
 // Output:
 
-interface IjsObject {
-    name: string;
+interface myProp {
+    email: string;
     age: number;
+    name: string;
+    birthplace: string;
 }

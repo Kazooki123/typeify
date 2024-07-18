@@ -1,6 +1,8 @@
 // Interface convert test
 
-const jsObject = {
+const myProp = {
+    email: "alice@test.com",
+    age: 30,
     name: "Alice",
-    age: 30
+    birthplace: "Japan"
 };
