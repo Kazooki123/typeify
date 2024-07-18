@@ -29,11 +29,10 @@ const path = __importStar(require("path"));
 const interfaceConverter_1 = require("./utils/interfaceConverter");
 const convertFile = (filePath) => {
     try {
-        // Reads the file
+        // Read the file
         let content = fs.readFileSync(filePath, "utf8");
         content = (0, interfaceConverter_1.findAndConvertInterfaces)(content);
         content = basicConvert(content);
-        // Writes a converted content to a new .ts file
         const dirName = path.dirname(filePath);
         const baseName = path.basename(filePath, ".js");
         const newFilePath = path.join(dirName, `${baseName}.ts`);
@@ -41,21 +40,28 @@ const convertFile = (filePath) => {
         console.log(`Converted ${filePath} to ${newFilePath}`);
     }
     catch (error) {
-        console.error(`Error converting file: ${error}`);
+        console.error(`Error converting file: ${error instanceof Error ? error.message : String(error)}`);
     }
 };
 exports.convertFile = convertFile;
 const basicConvert = (content) => {
     let convertedContent = content;
-    // Fix invalid variable declarations
-    convertedContent = convertedContent.replace(/^\s*(var)\s*=\s*(".*"|\d+)/gm, "let myVar: any = $2");
-    // Convert remaining var to let
+    convertedContent = convertedContent.replace(/^\s*(var|let)\s*(\w+)?\s*=\s*(".*"|\d+|true|false)/gm, (match, keyword, varName, value) => {
+        const type = value.startsWith('"')
+            ? "string"
+            : /^\d+$/.test(value)
+                ? "number"
+                : "boolean";
+        return `let ${varName || "myVar"}: ${type} = ${value}`;
+    });
     convertedContent = convertedContent.replace(/\bvar\b/g, "let");
-    // Replace invalid variable uses, but not 'let' itself
     convertedContent = convertedContent.replace(/\b(?<!(let|\.))var\b(?!\s*=)/g, "myVar");
-    // Add basic type annotations to string variables
-    convertedContent = convertedContent.replace(/let\s+(\w+)\s*=\s*"([^"]*)"/g, 'let $1: string = "$2"');
-    // Add basic type annotations to number variables
-    convertedContent = convertedContent.replace(/let\s+(\w+)\s*=\s*(\d+)/g, "let $1: number = $2");
+    convertedContent = convertedContent.replace(/function\s+(\w+)\s*\((.*?)\)/g, (match, funcName, params) => {
+        const typedParams = params
+            .split(",")
+            .map((param) => `${param.trim()}: any`)
+            .join(", ");
+        return `function ${funcName}(${typedParams}): any`;
+    });
     return convertedContent;
 };

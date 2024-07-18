@@ -1,5 +1,4 @@
 // Example for converting
-
 let myVar: string = "ok"
 
 if(!myVar) {
