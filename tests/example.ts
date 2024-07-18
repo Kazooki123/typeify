@@ -7,3 +7,5 @@ if(!myVar) {
 } else {
     console.log(myVar)
 }
+
+export { };

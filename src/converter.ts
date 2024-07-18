@@ -1,19 +1,21 @@
 import * as fs from "fs";
 import * as path from "path";
+import { findAndConvertInterfaces } from './utils/interfaceConverter';
 
 export const convertFile = (filePath: string): void => {
   try {
     // Reads the file
-    const content = fs.readFileSync(filePath, "utf8");
+    let content = fs.readFileSync(filePath, "utf8");
 
-    // Performs a basic conversion
-    const convertedContent = basicConvert(content);
+    content = findAndConvertInterfaces(content);
+
+    content = basicConvert(content);
 
     // Writes a converted content to a new .ts file
     const dirName = path.dirname(filePath);
     const baseName = path.basename(filePath, ".js");
     const newFilePath = path.join(dirName, `${baseName}.ts`);
-    fs.writeFileSync(newFilePath, convertedContent);
+    fs.writeFileSync(newFilePath, content);
 
     console.log(`Converted ${filePath} to ${newFilePath}`);
   } catch (error) {
