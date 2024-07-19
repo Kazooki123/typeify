@@ -1,7 +1,7 @@
 import ts from 'typescript';
 
-export function addAsyncReturnTypes(sourceCode: string): string {
-  const sourceFile = ts.createSourceFile('temp.ts', sourceCode, ts.ScriptTarget.Latest, true);
+export function addAsyncReturnTypes(filePath: string): string {
+  const sourceFile = ts.createSourceFile('temp.ts', filePath, ts.ScriptTarget.Latest, true);
 
   function visit(node: ts.Node, context: ts.TransformationContext): ts.Node {
     if (ts.isFunctionDeclaration(node) || ts.isArrowFunction(node) || ts.isMethodDeclaration(node)) {

@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.addAsyncReturnTypes = void 0;
 const typescript_1 = __importDefault(require("typescript"));
-function addAsyncReturnTypes(sourceCode) {
-    const sourceFile = typescript_1.default.createSourceFile('temp.ts', sourceCode, typescript_1.default.ScriptTarget.Latest, true);
+function addAsyncReturnTypes(filePath) {
+    const sourceFile = typescript_1.default.createSourceFile('temp.ts', filePath, typescript_1.default.ScriptTarget.Latest, true);
     function visit(node, context) {
         var _a;
         if (typescript_1.default.isFunctionDeclaration(node) || typescript_1.default.isArrowFunction(node) || typescript_1.default.isMethodDeclaration(node)) {
