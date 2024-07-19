@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { findAndConvertInterfaces } from './utils/interfaceConverter';
 import { findAndConvertEnums } from './utils/enumsConverter';
+import { addAsyncReturnTypes } from './utils/asyncAnnotator';
 
 export const convertFile = (filePath: string): void => {
   try {
@@ -11,6 +12,8 @@ export const convertFile = (filePath: string): void => {
     content = findAndConvertInterfaces(content);
 
     content = findAndConvertEnums(content);
+
+    content = addAsyncReturnTypes(content);
 
     content = basicConvert(content);
 
