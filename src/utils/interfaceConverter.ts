@@ -16,21 +16,29 @@ export function convertToInterface(obj: any, name: string): string {
 }
 
 export function findAndConvertInterfaces(content: string): string {
+  // Look for objects that are not enum-like
   const objectRegex = /const\s+(\w+)\s*=\s*({[^}]+})/g;
   let match;
   let convertedContent = content;
 
   while ((match = objectRegex.exec(content)) !== null) {
     const [fullMatch, name, objectLiteral] = match;
-    try {
-      const obj = eval(`(${objectLiteral})`);
-      const interfaceString = convertToInterface(obj, `${name}`);
-      convertedContent = convertedContent.replace(
-        fullMatch,
-        interfaceString + fullMatch
-      );
-    } catch (error) {
-      console.error(`Error converting object ${name}: ${error}`);
+    // Check if it's not an enum-like object
+    if (
+      !objectLiteral.match(
+        /{\s*(?:[\w]+\s*:\s*(?:['"][\w-]+['"]|\d+)\s*,?\s*)+}/
+      )
+    ) {
+      try {
+        const obj = eval(`(${objectLiteral})`);
+        const interfaceString = convertToInterface(obj, `${name}`);
+        convertedContent = convertedContent.replace(
+          fullMatch,
+          interfaceString + fullMatch
+        );
+      } catch (error) {
+        console.error(`Error converting object ${name}: ${error}`);
+      }
     }
   }
 

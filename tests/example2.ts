@@ -1,4 +1,4 @@
-// Output:
+// Interface convert test
 
 interface myProp {
     email: string;
