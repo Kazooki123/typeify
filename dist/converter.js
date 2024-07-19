@@ -27,11 +27,13 @@ exports.convertFile = void 0;
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const interfaceConverter_1 = require("./utils/interfaceConverter");
+const enumsConverter_1 = require("./utils/enumsConverter");
 const convertFile = (filePath) => {
     try {
         // Read the file
         let content = fs.readFileSync(filePath, "utf8");
         content = (0, interfaceConverter_1.findAndConvertInterfaces)(content);
+        content = (0, enumsConverter_1.findAndConvertEnums)(content);
         content = basicConvert(content);
         const dirName = path.dirname(filePath);
         const baseName = path.basename(filePath, ".js");

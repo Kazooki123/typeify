@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { findAndConvertInterfaces } from './utils/interfaceConverter';
+import { findAndConvertEnums } from './utils/enumsConverter';
 
 export const convertFile = (filePath: string): void => {
   try {
@@ -8,6 +9,8 @@ export const convertFile = (filePath: string): void => {
     let content = fs.readFileSync(filePath, "utf8");
 
     content = findAndConvertInterfaces(content);
+
+    content = findAndConvertEnums(content);
 
     content = basicConvert(content);
 
