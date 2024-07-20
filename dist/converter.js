@@ -29,6 +29,8 @@ const path = __importStar(require("path"));
 const interfaceConverter_1 = require("./utils/interfaceConverter");
 const enumsConverter_1 = require("./utils/enumsConverter");
 const asyncAnnotator_1 = require("./utils/asyncAnnotator");
+const nullConverter_1 = require("./utils/nullConverter");
+const addGenerics_1 = require("./utils/addGenerics");
 const convertFile = (filePath) => {
     try {
         // Read the file
@@ -36,6 +38,8 @@ const convertFile = (filePath) => {
         content = (0, interfaceConverter_1.findAndConvertInterfaces)(content);
         content = (0, enumsConverter_1.findAndConvertEnums)(content);
         content = (0, asyncAnnotator_1.addAsyncReturnTypes)(content);
+        content = (0, addGenerics_1.addGenerics)(content);
+        content = (0, nullConverter_1.addNullableTypes)(content);
         content = basicConvert(content);
         const dirName = path.dirname(filePath);
         const baseName = path.basename(filePath, ".js");

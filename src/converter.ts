@@ -3,6 +3,8 @@ import * as path from "path";
 import { findAndConvertInterfaces } from './utils/interfaceConverter';
 import { findAndConvertEnums } from './utils/enumsConverter';
 import { addAsyncReturnTypes } from './utils/asyncAnnotator';
+import { addNullableTypes } from './utils/nullConverter';
+import { addGenerics } from './utils/addGenerics';
 
 export const convertFile = (filePath: string): void => {
   try {
@@ -10,11 +12,10 @@ export const convertFile = (filePath: string): void => {
     let content = fs.readFileSync(filePath, "utf8");
 
     content = findAndConvertInterfaces(content);
-
     content = findAndConvertEnums(content);
-
     content = addAsyncReturnTypes(content);
-
+    content = addGenerics(content);
+    content = addNullableTypes(content);
     content = basicConvert(content);
 
     const dirName = path.dirname(filePath);
